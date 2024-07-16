@@ -4,7 +4,7 @@ function Login() {
   const [isActive, setIsActive] = useState(false);
 
   return (
-    <div>
+   
      <section className={isActive ? "wrapper active": "wrapper"}>
       <div className="form signup">
         <header onClick={()=>setIsActive(false)} >Register</header>
@@ -33,8 +33,8 @@ function Login() {
       </div>
 
 
-    </section>
-    </div>
+     </section>
+   
   )
 }
 

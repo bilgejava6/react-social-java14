@@ -14,12 +14,15 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: #f0faff;
+  background: url('./background-image.jpg');
+  background-size: cover; 
+  background-repeat: no-repeat;
 }
 
 .wrapper {
   position: relative;
-  max-width: 470px;
+  min-width: 500px;
+  max-width: 670px;
   width: 100%;
   border-radius: 12px;
   padding: 20px 30px 120px;
