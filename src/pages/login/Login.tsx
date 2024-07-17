@@ -3,8 +3,11 @@ import './Login.css'
 import { useDispatch } from 'react-redux';
 import { fetchLogin, fetchRegister } from '../../store/feature/authSlice';
 import { SocialDispatch } from '../../store';
+import swal from 'sweetalert';
+import { useNavigate } from 'react-router-dom';
 function Login() {
   const dispath: SocialDispatch = useDispatch();
+  const navigate = useNavigate();
   const [isActive, setIsActive] = useState(false);
   const [userName, setUserName] = useState('');
   const [password, setPassword] = useState('');
@@ -13,11 +16,20 @@ function Login() {
   const register = ()=>{
       dispath(fetchRegister({
         userName,password,rePassword,email
-      }));
+      })).then(data=>{
+        if(data.payload.code === 200){
+          swal("Başarılı!", "Kullanıcı kayıt edilmiştir!", "success")
+            .then(()=>setIsActive(true))
+        }
+      })
   }
 
   const login = ()=>{
-    dispath(fetchLogin({userName,password}));
+    dispath(fetchLogin({userName,password})).then(data=>{
+      if(data.payload.code===200){
+          navigate('/'); //  / -> root a git -> http://12.33.65.111:9090/ -> /user = http://12.33.65.111:9090/user
+      }
+    })
   }
   return (
    

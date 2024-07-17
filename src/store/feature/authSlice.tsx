@@ -2,12 +2,13 @@ import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit"
 import { IRegister } from "../../components/models/IRegister";
 import { ILogin } from "../../components/models/ILogin";
 import { IResponse } from "../../components/models/IResponse";
-
+import swal from 'sweetalert';
 const initialAuthState={
     token: '',
     user: [],
     isLoadingLogin: false,
-    isLoadingRegister: false
+    isLoadingRegister: false,
+    isAuth: false
 }
 /**
  * @param {userName, password, rePassword, email} payload
@@ -15,7 +16,7 @@ const initialAuthState={
 export const fetchRegister = createAsyncThunk(
     'auth/fetchRegister',
     async(payload: IRegister)=>{
-      await fetch('http://localhost:9090/user/register',{
+        const response =  await fetch('http://localhost:9090/user/register',{
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -26,9 +27,11 @@ export const fetchRegister = createAsyncThunk(
                 'rePassword': payload.rePassword,
                 'email': payload.email
             })
-        })
+        }).then(data => data.json())
+        return response;
     }
 );
+
 export const fetchLogin = createAsyncThunk(
     'auth/fetchLogin',
     async(payload: ILogin)=>{
@@ -42,12 +45,13 @@ export const fetchLogin = createAsyncThunk(
                         'userName': payload.userName,
                         'password': payload.password
                     })
-                }).then(res=> res.json())
-                return response;
+                }).then(data=> data.json())
+            return response;            
+             
         }catch(err){
-            
+            console.log('hata...: ', err);            
         }
-       return null;
+      
     }
 );
 
@@ -65,13 +69,13 @@ const authSlice = createSlice({
         build.addCase(fetchLogin.pending,(state)=>{
             state.isLoadingLogin = true;
         })
-        build.addCase(fetchLogin.fulfilled,(state,action: PayloadAction<IResponse>)=>{
-            console.log('fullfil...: ',action.payload)
+        build.addCase(fetchLogin.fulfilled,(state,action: PayloadAction<IResponse>)=>{            
             state.isLoadingLogin = false;
             if(action.payload.code === 200){
                 state.token = action.payload.data;
+                state.isAuth = true;
             }else
-                alert(action.payload.message)
+                swal('Hata!',action.payload.message,'error');
             
         });
         build.addCase(fetchLogin.rejected,(state,action)=>{
