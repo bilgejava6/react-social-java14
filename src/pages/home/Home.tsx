@@ -4,7 +4,17 @@ import './lightbox.min.css'
 import HomeLeft from '../../components/organism/HomeLeft'
 import HomeContent from '../../components/organism/HomeContent'
 import HomeRight from '../../components/organism/HomeRight'
+import { useAppSelector } from '../../store'
 function Home() {
+
+  const token = useAppSelector(state => state.auth.token);     
+
+  fetch('http://localhost:9090/user/get-profile?token='+token)
+  .then(data=>data.json())
+  .then(res=>{
+        console.log('user profile...: ', res);
+  });
+  
   return (
     <>
         <nav className="navbar navbar-expand-md navbar-dark mb-4" style={{backgroundColor:'#3097D1'}}>
