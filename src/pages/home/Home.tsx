@@ -4,36 +4,24 @@ import './lightbox.min.css'
 function Home() {
   return (
     <>
-     <nav className="navbar navbar-expand-md navbar-dark mb-4" style={{backgroundColor:'#3097D1'}}>
-        <a href="index.html" className="navbar-brand"><img src="/img/brand-white.png" alt="logo" className="img-fluid" width="80px" height="100px" /></a>
+        <nav className="navbar navbar-expand-md navbar-dark mb-4" style={{backgroundColor:'#3097D1'}}>
+            <a href="index.html" className="navbar-brand"><img src="/img/brand-white.png" alt="logo" className="img-fluid" width="80px" height="100px" /></a>
 
-        <button className="navbar-toggler" data-toggle="collapse" data-target="#responsive"><span className="navbar-toggler-icon"></span></button>
+            <button className="navbar-toggler" data-toggle="collapse" data-target="#responsive"><span className="navbar-toggler-icon"></span></button>
 
+            <div className="collapse navbar-collapse" id="responsive">
+                <ul className="navbar-nav mr-auto text-capitalize">
+                    <li className="nav-item"><a href="index.html" className="nav-link active">home</a></li>
+                    <li className="nav-item"><a href="profile.html" className="nav-link">profile</a></li>
+                    <li className="nav-item"><a href="#modalview" className="nav-link" data-toggle="modal">messages</a></li>
+                    <li className="nav-item"><a href="notification.html" className="nav-link">docs</a></li>
+                    <li className="nav-item"><a href="#" className="nav-link d-md-none">growl</a></li>
+                    <li className="nav-item"><a href="#" className="nav-link d-md-none">logout</a></li>
 
-        <div className="collapse navbar-collapse" id="responsive">
-            <ul className="navbar-nav mr-auto text-capitalize">
-                <li className="nav-item"><a href="index.html" className="nav-link active">home</a></li>
-                <li className="nav-item"><a href="profile.html" className="nav-link">profile</a></li>
-                <li className="nav-item"><a href="#modalview" className="nav-link" data-toggle="modal">messages</a></li>
-                <li className="nav-item"><a href="notification.html" className="nav-link">docs</a></li>
-                <li className="nav-item"><a href="#" className="nav-link d-md-none">growl</a></li>
-                <li className="nav-item"><a href="#" className="nav-link d-md-none">logout</a></li>
+                </ul>
 
-            </ul>
-
-            <form action="" className="form-inline ml-auto d-none d-md-block">
-                <input type="text" name="search" id="search" placeholder="Search" className="form-control form-control-sm" />
-            </form>
-            <a href="notification.html" className="text-decoration-none" style={{color: '#CBE4F2', fontSize: '22px'}}><i className="far fa-bell ml-3 d-none d-md-block"></i></a> 
-            <img src="/img/avatar-dhg.png" alt="" className="rounded-circle ml-3 d-none d-md-block" width="32px" height="32px" />
-
-        </div>
-
-
-
-
-
-    </nav>
+            </div>
+        </nav>
 
      <div className="modal fade" id="modalview">
         <div className="modal-dialog modal-dialog-scrollable modal-dialog-centered">
@@ -237,14 +225,11 @@ function Home() {
 
                         <div className="card-body">
 
-                                <h5 className="mb-3 card-title">About <small><a href="#" className="ml-1">Edit</a></small></h5>
-
-                                <p className="card-text"> <i className="fas fa-calendar-week mr-2"></i> Went to <a href="#" className="text-decoration-none">oh canada</a></p>
-
-                                <p className="card-text"> <i className="fas fa-user-friends mr-2"></i> Become a friend with <a href="#" className="text-decoration-none">obama</a></p>
-                                <p className="card-text"> <i className="far fa-building mr-2"></i> Work at <a href="#" className="text-decoration-none">Github</a></p>
-                                <p className="card-text"> <i className="fas fa-home mr-2"></i> Live in <a href="#" className="text-decoration-none">San francisco</a></p>
-                                <p className="card-text"> <i className="fas fa-map-marker mr-2"></i> From <a href="#" className="text-decoration-none">Seattle, WA</a></p>
+                                <h5 className="mb-3 card-title">Hakkında <small><a href="#" className="ml-1">Düzenle</a></small></h5>
+                                <p className="card-text"> <i className="fas fa-calendar-week mr-2" style={{width:'30px'}}></i>Doğum Tarihi: </p>
+                                <p className="card-text"> <i className="far fa-building mr-2" style={{width:'30px'}}></i>Ünvan: </p>
+                                <p className="card-text"> <i className="fas fa-home mr-2" style={{width:'30px'}}></i>İletişim: </p>
+                                <p className="card-text"> <i className="fas fa-map-marker mr-2" style={{width:'30px'}}></i>Adres: </p>
 
                         </div>
                      
@@ -252,7 +237,7 @@ function Home() {
                     <div className="card shadow-sm card-left3 mb-4">
 
                         <div className="card-body">
-                            <h5 className="card-title">Photos<small className="ml-2"><a href="#">.Edit </a></small></h5>
+                            <h5 className="card-title">Paylaşımlarım<small className="ml-2"><a href="#"></a></small></h5>
 
                             <div className="row">
                                 <div className="col-6 p-1">
@@ -281,26 +266,18 @@ function Home() {
 
 
                     <div className="card" >
-
-
                         <div className="card-header bg-transparent">
                             <form className="form-inline">
-
-
                                 <div className="input-group w-100">
-                                    <input type="text" name="message" id="message" placeholder="Message" className="form-control form-control-md" />
-
-                                    <div className="input-group-append">
-                                            <div className="input-group-text">
-                                                    <i className="fas fa-camera"></i>
+                                    <img src='http://picsum.photos/100/100' width={'60px'} height={'60px'} style={{margin: '7px', borderRadius: '50%'}}/>
+                                    <textarea rows={5} name="message" id="message" placeholder="Message" className="form-control form-control-sm" />
+                                    <div className="input-group-append" style={{margin: '2px'}}>
+                                            <div className="input-group-text" style={{width: '60px', height:'60px'}}>
+                                                <i className="fa-solid fa-arrow-up-from-bracket fa-xl ms-2"></i>
                                             </div>
-                                    </div>
-
+                                   </div>
                                 </div>
-        
-                               
                             </form>
-
                         </div>
                                                
                         <div className="card-body">

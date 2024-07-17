@@ -14,9 +14,9 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: url('./background-image.jpg');
-  background-size: cover; 
-  background-repeat: no-repeat;
+  background: url('../../img/background-image.jpg') !important; 
+  background-size: cover !important; 
+  background-repeat: no-repeat !important;
 }
 
 .wrapper {

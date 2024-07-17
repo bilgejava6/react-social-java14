@@ -3,8 +3,9 @@
   }
 
   body{
-      background: none;
-      background-color: #F5F8FA;
+      background: url('../../img/background-image.jpg') !important; 
+      background-size: cover !important; 
+      background-repeat: no-repeat !important;
       font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
       margin: 0;
       font-weight: 300;
