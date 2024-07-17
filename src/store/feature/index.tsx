@@ -1,4 +1,6 @@
 import authSlice from "./authSlice";
+import userSlice from "./userSlice";
 export{
-    authSlice
+    authSlice,
+    userSlice
 }

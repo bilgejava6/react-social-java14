@@ -1,20 +1,21 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import './Home.css'
 import './lightbox.min.css'
 import HomeLeft from '../../components/organism/HomeLeft'
 import HomeContent from '../../components/organism/HomeContent'
 import HomeRight from '../../components/organism/HomeRight'
-import { useAppSelector } from '../../store'
+import { SocialDispatch, useAppSelector } from '../../store'
+import { useDispatch } from 'react-redux'
+import { fetchgetUserProfile, IUserProfile } from '../../store/feature/userSlice'
 function Home() {
-
+  const dispatch = useDispatch<SocialDispatch>();      
   const token = useAppSelector(state => state.auth.token);     
-
-  fetch('http://localhost:9090/user/get-profile?token='+token)
-  .then(data=>data.json())
-  .then(res=>{
-        console.log('user profile...: ', res);
-  });
+  const userProfile: IUserProfile | null = useAppSelector(state=> state.user.userProfile);
   
+  useEffect(()=>{
+        dispatch(fetchgetUserProfile(token));
+  },[]);
+
   return (
     <>
         <nav className="navbar navbar-expand-md navbar-dark mb-4" style={{backgroundColor:'#3097D1'}}>
@@ -212,7 +213,7 @@ function Home() {
         <div className="container">
             <div className="row">
                 <div className="col-12 col-lg-3">
-                    <HomeLeft />                    
+                    <HomeLeft user={userProfile} />                    
                 </div>
 
                 <div className="col-12 col-lg-6" >
