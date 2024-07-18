@@ -1,6 +1,13 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit"
 import { IResponse } from "../../components/models/IResponse";
-const initialPostState= {
+import { IPost } from "../../components/models/IPost";
+
+interface IInitialPost{
+    postList: IPost[],
+    isPostLoading: boolean
+}
+
+const initialPostState: IInitialPost= {
     postList: [],
     isPostLoading: false
 }

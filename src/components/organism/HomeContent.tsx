@@ -16,7 +16,21 @@ function HomeContent() {
 		<div className="middle-column">
 			<div className="card">
         <CreatePostCard />
-        <Post />
+        {
+			postList.map((post,index)=>{
+				return <Post 
+						key={index} 
+						avatar={post.avatar}
+						userName={post.userName}
+						url={post.photo}
+						comment={post.comment}
+						date={post.sharedDate}
+						likeCount={post.likeCount}
+						commentCount={post.commentCount}
+						/>;
+			})
+		}
+		
       </div>
 		</div>
 	);

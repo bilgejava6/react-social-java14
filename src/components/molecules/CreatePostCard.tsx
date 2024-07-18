@@ -1,7 +1,7 @@
 import {useState} from "react";
 import { useDispatch } from "react-redux";
 import { useAppSelector, SocialDispatch } from "../../store";
-import { fetchCreatePost } from "../../store/feature/postSlice";
+import { fetchCreatePost, fetchGetPostList } from "../../store/feature/postSlice";
 import swal from "sweetalert";
 function CreatePostCard() {
 	const token = useAppSelector(state=>state.auth.token);
@@ -13,7 +13,9 @@ function CreatePostCard() {
 			comment: comment,
 			url: 'http://picsum.photos/500/500'
 		})).then(()=>{
-			swal('Başarılı', 'Post başarı ile paylaşıldı', 'success');
+			swal('Başarılı', 'Post başarı ile paylaşıldı', 'success').then(()=>{
+				dispatch(fetchGetPostList(token));
+			})
 		});
 	}
 	return (
