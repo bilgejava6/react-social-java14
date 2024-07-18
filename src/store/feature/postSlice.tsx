@@ -1,4 +1,5 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit"
+import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit"
+import { IResponse } from "../../components/models/IResponse";
 const initialPostState= {
     postList: [],
     isPostLoading: false
@@ -25,13 +26,27 @@ export const fetchCreatePost= createAsyncThunk(
         return response;
     }
 )
+export const fetchGetPostList = createAsyncThunk(
+    'post/fetchGetPostList',
+    async(token: string)=>{
+        const result = await fetch('http://localhost:9090/post/get-post-list?token='+ token)
+        .then(data=>data.json());
+        return result;
+    }
+);
 const postSlice = createSlice({
     name: 'post',
     initialState: initialPostState,
     reducers: {},
     extraReducers: (build)=>{
-        build.addCase(fetchCreatePost.fulfilled, (state,action)=>{
-            
+        build.addCase(fetchCreatePost.fulfilled, (state,action)=>{            
+        });
+        build.addCase(fetchGetPostList.pending,(state)=>{
+            state.isPostLoading = true;
+        });
+        build.addCase(fetchGetPostList.fulfilled,(state,action: PayloadAction<IResponse>)=>{
+            state.postList = action.payload.data;
+            state.isPostLoading= false;
         })
     }
 });
