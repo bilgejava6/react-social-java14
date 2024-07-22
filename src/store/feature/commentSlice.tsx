@@ -1,11 +1,15 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit"
+import { IComment } from "../../components/models/IComment"
+import { IResponse } from "../../components/models/IResponse"
 
 interface ICommentState{
-    postId: number
+    postId: number,
+    commentList: IComment[]
 }
 
 const initialCommentState:ICommentState ={
-    postId: 0
+    postId: 0,
+    commentList: []
 }
 export interface IAddCommentPayload{
     postId: number,
@@ -29,6 +33,30 @@ export const fetchAddComment = createAsyncThunk(
        return res;
     }
 )
+export interface IGetAllCommentByPostId{
+    token: string,
+    postId: number,
+    size: number,
+    page: number
+}
+export const fetchGetAllCommentByPostId = createAsyncThunk(
+    'comment/fetchGetAllCommentByPostId',
+    async (payload: IGetAllCommentByPostId)=>{
+        const res = fetch('http://localhost:9090/comment/get-all-comments-by-postid',{
+            method: 'POST',
+            headers:{
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                'postId': payload.postId,
+                'token': payload.token,
+                'size': payload.size,
+                'page': payload.page
+            })
+       }).then(data=>data.json())
+       return res;
+    }
+);
 
 const commentSlice = createSlice({
     name: 'comment',
@@ -41,6 +69,9 @@ const commentSlice = createSlice({
     extraReducers: (build) =>{
         build.addCase(fetchAddComment.fulfilled,(state,action)=>{
 
+        });
+        build.addCase(fetchGetAllCommentByPostId.fulfilled, (state,action:PayloadAction<IResponse>)=>{
+            state.commentList = [...state.commentList, ...action.payload.data]
         })
     }
 })

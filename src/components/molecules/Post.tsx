@@ -1,7 +1,7 @@
 import { useDispatch } from "react-redux";
 import { getFormattedElapsedTime } from "../../util/Tools";
-import { SocialDispatch } from "../../store";
-import { fetchAddComment, setPostId } from "../../store/feature/commentSlice";
+import { SocialDispatch, useAppSelector } from "../../store";
+import { fetchAddComment, fetchGetAllCommentByPostId, setPostId } from "../../store/feature/commentSlice";
 
 interface IPostProps{
 	postId: number,
@@ -13,12 +13,26 @@ interface IPostProps{
 	likeCount: number,
 	commentCount: number,
 	commentList?: []
+	
 }
 function Post(props: IPostProps ) {
 	const dispatch = useDispatch<SocialDispatch>(); 
+	const token = useAppSelector(state=> state.auth.token);
 	const addComment = ()=>{		
 		dispatch(setPostId(props.postId));
 	}	
+	const getAllComment = ()=>{
+		/**
+		 * token, postid, page, size
+		 */
+		dispatch(setPostId(props.postId));
+		dispatch(fetchGetAllCommentByPostId({
+			postId: props.postId,
+			token: token,
+			page: 0,
+			size: 10
+		}));
+	}
 	return (
 		<>
 			<div className="card-body">
@@ -57,29 +71,33 @@ function Post(props: IPostProps ) {
 						</p>
 						<small>{getFormattedElapsedTime(props.date)}</small>
 						{
-							props.commentList?.map((comment,index)=>{
-								return <>
-									<div className="media mb-3">
+							props.commentList?.map((comment:any,index)=>{
+								return (
+									<div className="media mb-3 shadow p-2 rounded-4" key={index}>
 											<img
-												src="/img/avatar-dhg.png"
+												src={comment.avatar}
 												alt="img"
 												width="45px"
 												height="45px"
 												className="rounded-circle mr-2"
 											/>
 											<div className="media-body">
+												<p>{comment.userName}</p>
 												<p className="card-text text-justify">
-													Jacon Thornton: Donec id elit non mi porta gravida at eget
-													metus. Vivamus sagittis lacus vel augue laoreet rutrum
-													faucibus dolor auctor. Donec ullamcorper nulla non metus
-													auctor fringilla. Praesent commodo cursus magna, vel
-													scelerisque nisl consectetur et. Sed posuere consectetur est
-													at lobortis.
+													{
+														comment.comment
+													}
 												</p>
 											</div>
 									</div>
-								</>;
+								)
 							})
+						}
+						{
+							props.commentCount >3 &&
+							(
+								<p><a onClick={getAllComment} data-bs-toggle="modal" data-bs-target="#commentList"  style={{color: '#BBE9FF'}}>{props.commentCount} yorumun tümünü gör</a></p>
+							)
 						}
 						
 					</div>

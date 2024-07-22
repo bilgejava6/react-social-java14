@@ -8,5 +8,5 @@ export interface IPost{
   likeCount: number
   commentCount: number
   sharedDate: number
-  comentList?: number
+  commentList?: []
 }

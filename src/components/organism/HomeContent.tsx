@@ -11,7 +11,7 @@ function HomeContent() {
 	useEffect(()=>{
 		dispatch(fetchGetPostList(token));
 	},[]);
-	console.log('post listesi...: ', postList);
+
 	return (
 		<div className="middle-column">
 			<div className="card">
@@ -28,6 +28,7 @@ function HomeContent() {
 						date={post.sharedDate}
 						likeCount={post.likeCount}
 						commentCount={post.commentCount}
+						commentList={post.commentList}
 						/>;
 			})
 		}

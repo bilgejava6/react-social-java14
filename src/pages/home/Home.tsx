@@ -8,6 +8,7 @@ import { SocialDispatch, useAppSelector } from '../../store'
 import { useDispatch } from 'react-redux'
 import { fetchgetUserProfile, IUserProfile } from '../../store/feature/userSlice'
 import AddCommentPopup from '../../components/molecules/AddCommentPopup'
+import CommentListPopup from '../../components/molecules/CommentListPopup'
 function Home() {
   const dispatch = useDispatch<SocialDispatch>();      
   const token = useAppSelector(state => state.auth.token);     
@@ -228,6 +229,7 @@ function Home() {
                 </div>
             </div>
             <AddCommentPopup />
+            <CommentListPopup />
         </div>
     </>
   )
