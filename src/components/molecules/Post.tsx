@@ -1,6 +1,10 @@
+import { useDispatch } from "react-redux";
 import { getFormattedElapsedTime } from "../../util/Tools";
+import { SocialDispatch } from "../../store";
+import { fetchAddComment, setPostId } from "../../store/feature/commentSlice";
 
 interface IPostProps{
+	postId: number,
 	avatar: string,
 	userName: string,
 	comment: string,
@@ -11,6 +15,10 @@ interface IPostProps{
 	commentList?: []
 }
 function Post(props: IPostProps ) {
+	const dispatch = useDispatch<SocialDispatch>(); 
+	const addComment = ()=>{		
+		dispatch(setPostId(props.postId));
+	}	
 	return (
 		<>
 			<div className="card-body">
@@ -37,6 +45,8 @@ function Post(props: IPostProps ) {
 						</div>
 						<p className="card-text" style={{marginLeft:'10px', marginBottom: '10px'}}>
 						<i
+							onClick={addComment}
+							data-bs-toggle="modal" data-bs-target="#exampleModal"
 							className="fa-solid fa-comments mr-2"
 							style={{ width: "30px" }}></i>
 							{props.commentCount}

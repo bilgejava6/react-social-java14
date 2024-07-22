@@ -4,12 +4,14 @@ import { IPost } from "../../components/models/IPost";
 
 interface IInitialPost{
     postList: IPost[],
-    isPostLoading: boolean
+    isPostLoading: boolean,
+    sendMessagePostId: number
 }
 
 const initialPostState: IInitialPost= {
     postList: [],
-    isPostLoading: false
+    isPostLoading: false,
+    sendMessagePostId: 0
 }
 interface ICreatePostPayload{
     token: string,

@@ -1,4 +1,5 @@
 export interface IPost{
+  postId: number
   userId: number
   userName: string
   avatar: string
@@ -7,4 +8,5 @@ export interface IPost{
   likeCount: number
   commentCount: number
   sharedDate: number
+  comentList?: number
 }

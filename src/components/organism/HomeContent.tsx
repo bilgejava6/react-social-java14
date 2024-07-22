@@ -19,6 +19,7 @@ function HomeContent() {
         {
 			postList.map((post,index)=>{
 				return <Post 
+						postId={post.postId}
 						key={index} 
 						avatar={post.avatar}
 						userName={post.userName}
