@@ -5,9 +5,8 @@ function LikeList() {
 		<>
 			<div className="card-body">
 				<h6 className="card-title ">
-					Likes{" "}
-					<a href="#" className="ml-1">
-						<small>View All</small>{" "}
+					Following{" "}
+					<a href="#" className="ml-1">						
 					</a>{" "}
 				</h6>
 				<div className="row no-gutters d-none d-lg-flex">

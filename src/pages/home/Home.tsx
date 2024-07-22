@@ -6,7 +6,7 @@ import HomeContent from '../../components/organism/HomeContent'
 import HomeRight from '../../components/organism/HomeRight'
 import { SocialDispatch, useAppSelector } from '../../store'
 import { useDispatch } from 'react-redux'
-import { fetchgetUserProfile, IUserProfile } from '../../store/feature/userSlice'
+import { fetchgetUserProfile, fetchSearchUserList, IUserProfile } from '../../store/feature/userSlice'
 import AddCommentPopup from '../../components/molecules/AddCommentPopup'
 import CommentListPopup from '../../components/molecules/CommentListPopup'
 function Home() {
@@ -16,6 +16,7 @@ function Home() {
   
   useEffect(()=>{
         dispatch(fetchgetUserProfile(token));
+        dispatch(fetchSearchUserList({token: token, userName:''}));
   },[]);
 
   return (

@@ -13,13 +13,22 @@ export interface IUserProfile{
   phone: string
   address: string
 }
+export interface ISearchUser{
+    id: number,
+    userName: string,
+    name: string,
+    avatar: string
+}
+
 interface IUserState {
     userProfile: IUserProfile | null,
-    isLoading: boolean
+    isLoading: boolean,
+    userSearchList: ISearchUser[]
 }
 const initialUserState: IUserState = {
     userProfile: null,
-    isLoading: false
+    isLoading: false,
+    userSearchList: []
 }
 
 export const fetchgetUserProfile = createAsyncThunk(
@@ -30,6 +39,27 @@ export const fetchgetUserProfile = createAsyncThunk(
         return result;
     }
 )
+export interface IFetchSearchUserPayload{
+    token: string,
+    userName: string
+}
+export const fetchSearchUserList = createAsyncThunk(
+    'user/fetchSearchUserList', 
+   async (payload:IFetchSearchUserPayload)=>{
+        const res = fetch('http://localhost:9090/user/search-user',{
+            method: 'POST',
+            headers:{
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                'token': payload.token,
+                'userName': payload.userName
+            })
+        }).then(data=>data.json())
+        return res;
+   }
+)
+
 const userSlice = createSlice({
     name: 'user',
     initialState: initialUserState,
@@ -39,6 +69,9 @@ const userSlice = createSlice({
             if(action.payload.code===200){
                 state.userProfile = action.payload.data;
             }
+        });
+        build.addCase(fetchSearchUserList.fulfilled,(state,action:PayloadAction<IResponse>)=>{
+            state.userSearchList = action.payload.data;
         })
     }
 });
