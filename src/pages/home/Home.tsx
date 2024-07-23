@@ -9,6 +9,7 @@ import { useDispatch } from 'react-redux'
 import { fetchgetUserProfile, fetchSearchUserList, IUserProfile } from '../../store/feature/userSlice'
 import AddCommentPopup from '../../components/molecules/AddCommentPopup'
 import CommentListPopup from '../../components/molecules/CommentListPopup'
+import { fetchFollowList } from '../../store/feature/followSlice'
 function Home() {
   const dispatch = useDispatch<SocialDispatch>();      
   const token = useAppSelector(state => state.auth.token);     
@@ -17,6 +18,7 @@ function Home() {
   useEffect(()=>{
         dispatch(fetchgetUserProfile(token));
         dispatch(fetchSearchUserList({token: token, userName:''}));
+        dispatch(fetchFollowList(token));
   },[]);
 
   return (

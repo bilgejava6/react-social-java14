@@ -1,6 +1,6 @@
 import { useDispatch } from "react-redux";
 import { SocialDispatch, useAppSelector } from "../../store";
-import { fetchAddFollow, fetchUnFollow } from "../../store/feature/followSlice";
+import { fetchAddFollow, fetchFollowList, fetchUnFollow } from "../../store/feature/followSlice";
 import swal from "sweetalert";
 import { fetchSearchUserList } from "../../store/feature/userSlice";
 interface IUserProps{
@@ -24,6 +24,7 @@ function User(user: IUserProps) {
 					token: token,
 					userName: userName
 				}));
+				dispatch(fetchFollowList(token));
 			})
 		});
 	}
@@ -32,7 +33,13 @@ function User(user: IUserProps) {
 			token: token,
 			followId: user.userId
 		})).then(()=> {
-			swal('Takip İsteği','Takipten çıkma işlemi başarılı şekilde tamamlandı','warning');
+			swal('Takip İsteği','Takipten çıkma işlemi başarılı şekilde tamamlandı','warning').then(()=>{
+				dispatch(fetchSearchUserList({
+					token: token,
+					userName: userName
+				}));
+				dispatch(fetchFollowList(token));
+			})
 		})
 	}
 	

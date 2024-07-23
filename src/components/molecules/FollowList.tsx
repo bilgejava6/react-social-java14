@@ -1,6 +1,8 @@
+import { useAppSelector } from "../../store";
 import User from "../atoms/User";
 
 function FollowList() {
+	const followList = useAppSelector(state=> state.follow.followList);
 	return (
 		<>
 			<div className="card-body">
@@ -10,8 +12,11 @@ function FollowList() {
 					</a>{" "}
 				</h6>
 				<div className="row no-gutters d-none d-lg-flex">
-					<User isFollow={true} userId={111} name={"Deniz"} userName={"deniz4333"} avatar={''} />
-					<User isFollow={true} userId={222} name={"Temel TAŞ"} userName={"temel61"} avatar={''} />
+					{
+						followList.map((user,index)=>{
+							return <User isFollow={true} userId={user.id} name={user.name} userName={user.userName} avatar={user.avatar} />
+						})
+					}
 				</div>
 			</div>
 		</>

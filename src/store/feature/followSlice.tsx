@@ -1,6 +1,14 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit"
+import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit"
+import { IResponse } from "../../components/models/IResponse"
+import { ISearchUser } from "./userSlice"
 
-const initialFollowState = {
+interface IFollowState{
+    followList: ISearchUser[],
+    userId: number,
+    followId: number
+}
+
+const initialFollowState: IFollowState = {
     followList: [],
     userId: 0,
     followId: 0
@@ -25,7 +33,6 @@ export const fetchAddFollow = createAsyncThunk(
         return res;
     }
 )
-
 interface IFetchUnFollowPayload{
     token: string,
     followId: number
@@ -46,13 +53,22 @@ export const fetchUnFollow = createAsyncThunk(
     return res;
     }
 )
-
+export const fetchFollowList = createAsyncThunk(
+    'follow/fetchFollowList',
+    async(token: string)=>{
+        const res = fetch('http://localhost:9090/follow/get-all-following?token='+token)
+        .then(data=>data.json());
+        return res;
+    }
+)
 const followSlice = createSlice({
     name: 'follow',
     initialState: initialFollowState,
     reducers:{},
     extraReducers: (build)=>{
-
+        build.addCase(fetchFollowList.fulfilled,(state,action:PayloadAction<IResponse>)=>{
+                state.followList = action.payload.data;
+        });
     }
 });
 
