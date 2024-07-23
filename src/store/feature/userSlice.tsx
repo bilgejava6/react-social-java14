@@ -23,12 +23,14 @@ export interface ISearchUser{
 interface IUserState {
     userProfile: IUserProfile | null,
     isLoading: boolean,
-    userSearchList: ISearchUser[]
+    userSearchList: ISearchUser[],
+    searchUserName: string
 }
 const initialUserState: IUserState = {
     userProfile: null,
     isLoading: false,
-    userSearchList: []
+    userSearchList: [],
+    searchUserName: ''
 }
 
 export const fetchgetUserProfile = createAsyncThunk(
@@ -63,7 +65,11 @@ export const fetchSearchUserList = createAsyncThunk(
 const userSlice = createSlice({
     name: 'user',
     initialState: initialUserState,
-    reducers: {},
+    reducers: {
+        setSearchUserName(state,action){
+            state.searchUserName = action.payload
+        }
+    },
     extraReducers: (build)=>{
         build.addCase(fetchgetUserProfile.fulfilled,(state,action: PayloadAction<IResponse>)=>{
             if(action.payload.code===200){
@@ -75,5 +81,7 @@ const userSlice = createSlice({
         })
     }
 });
-
+export const {
+    setSearchUserName
+} = userSlice.actions;
 export default userSlice.reducer;
