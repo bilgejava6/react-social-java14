@@ -1,5 +1,5 @@
 import React from "react";
-import LikeList from "../molecules/LikeList";
+import FollowList from "../molecules/FollowList";
 import UserList from "../molecules/UserList";
 
 function HomeRight() {
@@ -15,7 +15,7 @@ function HomeRight() {
 			</div>
 
 			<div className="card shadow-sm mb-4">
-        		<LikeList />				
+        		<FollowList />				
 			</div>
 			
 			<div className="card shadow-sm">

@@ -8,7 +8,7 @@ import { useNavigate } from 'react-router-dom';
 function Login() {
   const dispath: SocialDispatch = useDispatch();
   const navigate = useNavigate();
-  const [isActive, setIsActive] = useState(false);
+  const [isActive, setIsActive] = useState(true);
   const [userName, setUserName] = useState('');
   const [password, setPassword] = useState('');
   const [rePassword, setRePassword] = useState('');

@@ -1,12 +1,17 @@
 import { configureStore } from "@reduxjs/toolkit";
-import { authSlice, userSlice, postSlice,commentSlice } from "./feature";
+import { 
+  authSlice, userSlice, 
+  postSlice,commentSlice,
+  followSlice
+} from "./feature";
 import { useSelector} from 'react-redux';
 const store = configureStore({
   reducer:{
     auth: authSlice,
     user: userSlice,
     post: postSlice,
-    comment: commentSlice
+    comment: commentSlice,
+    follow: followSlice
   }
 });
 export type SocialDispatch = typeof store.dispatch;
