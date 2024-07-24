@@ -3,6 +3,7 @@ import { IRegister } from "../../components/models/IRegister";
 import { ILogin } from "../../components/models/ILogin";
 import { IResponse } from "../../components/models/IResponse";
 import swal from 'sweetalert';
+import Rest from '../../config/RestApis';
 const initialAuthState={
     token: '',
     user: [],
@@ -16,7 +17,7 @@ const initialAuthState={
 export const fetchRegister = createAsyncThunk(
     'auth/fetchRegister',
     async(payload: IRegister)=>{
-        const response =  await fetch('http://localhost:9090/user/register',{
+        const response =  await fetch(Rest.authService+'/register',{
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -36,7 +37,7 @@ export const fetchLogin = createAsyncThunk(
     'auth/fetchLogin',
     async(payload: ILogin)=>{
         try{
-        const response =  await fetch('http://localhost:9090/user/login',{
+        const response =  await fetch(Rest.authService+'/login',{
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'

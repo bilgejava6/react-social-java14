@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit"
 import { IResponse } from "../../components/models/IResponse"
 import { ISearchUser } from "./userSlice"
-
+import Rest from '../../config/RestApis';
 interface IFollowState{
     followList: ISearchUser[],
     userId: number,
@@ -20,7 +20,7 @@ interface IFetchAddFollowPayload{
 export const fetchAddFollow = createAsyncThunk(
     'follow/fetchAddFollow',
     async (payload:IFetchAddFollowPayload)=>{
-        const res = fetch('http://localhost:9090/follow/add-follow',{
+        const res = fetch(Rest.followService+'/add-follow',{
             method: 'POST',
             headers:{
                 'Content-Type': 'application/json'
@@ -40,7 +40,7 @@ interface IFetchUnFollowPayload{
 export const fetchUnFollow = createAsyncThunk(
     'follow/fetchUnFollow',
    async (payload: IFetchUnFollowPayload)=>{
-    const res = fetch('http://localhost:9090/follow/un-follow',{
+    const res = fetch(Rest.followService+'/un-follow',{
         method: 'POST',
         headers:{
             'Content-Type': 'application/json'
@@ -56,7 +56,7 @@ export const fetchUnFollow = createAsyncThunk(
 export const fetchFollowList = createAsyncThunk(
     'follow/fetchFollowList',
     async(token: string)=>{
-        const res = fetch('http://localhost:9090/follow/get-all-following?token='+token)
+        const res = fetch(Rest.followService+'/get-all-following?token='+token)
         .then(data=>data.json());
         return res;
     }

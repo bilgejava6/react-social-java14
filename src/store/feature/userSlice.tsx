@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit"
 import { IResponse } from "../../components/models/IResponse"
-
+import Rest from '../../config/RestApis';
 
 export interface IUserProfile{
   name: string
@@ -36,7 +36,7 @@ const initialUserState: IUserState = {
 export const fetchgetUserProfile = createAsyncThunk(
     'user/fetchgetUserProfile',
     async(payload: string)=>{
-        const result = await fetch('http://localhost:9090/user/get-profile?token='+payload)
+        const result = await fetch(Rest.userService+'/get-profile?token='+payload)
         .then(data=>data.json());
         return result;
     }
@@ -48,7 +48,7 @@ export interface IFetchSearchUserPayload{
 export const fetchSearchUserList = createAsyncThunk(
     'user/fetchSearchUserList', 
    async (payload:IFetchSearchUserPayload)=>{
-        const res = fetch('http://localhost:9090/user/search-user',{
+        const res = fetch(Rest.userService+'/search-user',{
             method: 'POST',
             headers:{
                 'Content-Type': 'application/json'

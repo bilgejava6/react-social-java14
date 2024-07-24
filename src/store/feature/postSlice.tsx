@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit"
 import { IResponse } from "../../components/models/IResponse";
 import { IPost } from "../../components/models/IPost";
-
+import Rest from '../../config/RestApis';
 interface IInitialPost{
     postList: IPost[],
     isPostLoading: boolean,
@@ -21,7 +21,7 @@ interface ICreatePostPayload{
 export const fetchCreatePost= createAsyncThunk(
     'post/fetchCreatePost',
     async(payload: ICreatePostPayload)=>{
-        const response = fetch('http://localhost:9090/post/create-post',{
+        const response = fetch(Rest.postService+'/create-post',{
             method: 'POST',
             headers:{
                 'Content-Type': 'application/json'
@@ -38,7 +38,7 @@ export const fetchCreatePost= createAsyncThunk(
 export const fetchGetPostList = createAsyncThunk(
     'post/fetchGetPostList',
     async(token: string)=>{
-        const result = await fetch('http://localhost:9090/post/get-post-list?token='+ token)
+        const result = await fetch(Rest.postService+'/get-post-list?token='+ token)
         .then(data=>data.json());
         return result;
     }

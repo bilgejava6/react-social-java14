@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit"
 import { IComment } from "../../components/models/IComment"
 import { IResponse } from "../../components/models/IResponse"
-
+import Rest from '../../config/RestApis';
 interface ICommentState{
     postId: number,
     commentList: IComment[]
@@ -19,7 +19,7 @@ export interface IAddCommentPayload{
 export const fetchAddComment = createAsyncThunk(
     'comment/fetchAddComment',
      async(payload: IAddCommentPayload)=>{
-       const res = fetch('http://localhost:9090/comment/add-comment',{
+       const res = fetch(Rest.commentService+'/add-comment',{
             method: 'POST',
             headers:{
                 'Content-Type': 'application/json'
@@ -42,7 +42,7 @@ export interface IGetAllCommentByPostId{
 export const fetchGetAllCommentByPostId = createAsyncThunk(
     'comment/fetchGetAllCommentByPostId',
     async (payload: IGetAllCommentByPostId)=>{
-        const res = fetch('http://localhost:9090/comment/get-all-comments-by-postid',{
+        const res = fetch(Rest.commentService+'/get-all-comments-by-postid',{
             method: 'POST',
             headers:{
                 'Content-Type': 'application/json'
