@@ -10,11 +10,25 @@ function CreatePostCard() {
 	const [photos, setPhotos] = useState('https://picsum.photos/500/500');
 	const [comment, setComment] = useState('');
 	let inputFileRef = React.useRef<HTMLInputElement | null>(null);
-	const createPost = ()=>{
+	const emptyFile: File = new File([], 'empty-file.txt');
+	const [selectedFile, setSelectedFile] = useState<File>(emptyFile);
+	const handleFileChange = (event: any) => {
+		setSelectedFile(event.target.files[0]);
+		setPhotos(URL.createObjectURL(event.target.files![0]))
+	};
+	const createPost = async ()=>{
+
+		let formData: FormData = new FormData();
+		formData.append('file', selectedFile);
+		
+		let result = await fetch('http://localhost:9090/media/add-storage-post',{
+			method: 'POST',
+			body: formData
+		}).then(data=>data.json());		
 		dispatch(fetchCreatePost({
 			token: token,
 			comment: comment,
-			url: 'http://picsum.photos/500/500'
+			url: result.data
 		})).then(()=>{
 			swal('Başarılı', 'Post başarı ile paylaşıldı', 'success').then(()=>{
 				dispatch(fetchGetPostList(token));
@@ -33,8 +47,12 @@ function CreatePostCard() {
 							style={{ margin: "7px", borderRadius: "50%" }}
 							onClick={()=>inputFileRef.current?.click()}
 						/>
-						<input type="file" hidden ref={inputFileRef} 
-							onChange={evt => setPhotos(URL.createObjectURL(evt.target.files![0]))}/>
+						<input type="file" hidden ref={inputFileRef} onChange={handleFileChange} />
+							{
+								/**
+								 * onChange={evt => setPhotos(URL.createObjectURL(evt.target.files![0]))}/>
+								 */
+							}
 						<textarea
 							onChange={evt=>setComment(evt.target.value)}
 							rows={5}

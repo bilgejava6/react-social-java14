@@ -2,7 +2,7 @@ const server_cluster = 'http://service-loadbalancer-auth:9090';
 const server_loadbalancer = 'http://34.163.188.223:9090';
 const server_local = 'http://localhost:9090';
 
-const server = server_loadbalancer;
+const server = server_local;
 const apis = {
     authService: server+'/user',
     followService: server+'/follow',

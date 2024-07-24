@@ -1,10 +1,15 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 interface IAboutProps{
 	bornDate: number
 	phone: string
 	address: string
 }
 function About(props: IAboutProps) {
+	const nagigate = useNavigate();
+	const routeEdit = ()=>{
+		nagigate('/edit-profile');
+	}
 	return (
 		<>
 			<div className="card shadow-sm card-left2 mb-4">
@@ -12,7 +17,7 @@ function About(props: IAboutProps) {
 					<h5 className="mb-3 card-title">
 						Hakkında
 						<small>
-							<a href="#" className="ml-1">
+							<a onClick={routeEdit} className="ml-1">
 								Düzenle
 							</a>
 						</small>

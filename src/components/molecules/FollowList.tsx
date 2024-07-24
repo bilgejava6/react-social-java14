@@ -14,7 +14,7 @@ function FollowList() {
 				<div className="row no-gutters d-none d-lg-flex">
 					{
 						followList.map((user,index)=>{
-							return <User isFollow={true} userId={user.id} name={user.name} userName={user.userName} avatar={user.avatar} />
+							return <User key={index} isFollow={true} userId={user.id} name={user.name} userName={user.userName} avatar={user.avatar} />
 						})
 					}
 				</div>
