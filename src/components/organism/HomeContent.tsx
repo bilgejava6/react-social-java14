@@ -9,13 +9,18 @@ function HomeContent() {
 	const token = useAppSelector(state=> state.auth.token);
 	const dispatch = useDispatch<SocialDispatch>();
 	useEffect(()=>{
-		dispatch(fetchGetPostList(token));
+		refreshPage();
 	},[]);
-
+	const refreshPage=()=>{
+		dispatch(fetchGetPostList(token));
+	}
 	return (
 		<div className="middle-column">
 			<div className="card">
         <CreatePostCard />
+		<div className="row m-3">
+			<button onClick={refreshPage} style={{width:'25%', marginLeft: '37%'}} className="btn btn-warning justify-content-center">Yenile</button>
+		</div>
         {
 			postList.map((post,index)=>{
 				return <Post 

@@ -2,6 +2,7 @@ import { useDispatch } from "react-redux";
 import { getFormattedElapsedTime } from "../../util/Tools";
 import { SocialDispatch, useAppSelector } from "../../store";
 import { fetchAddComment, fetchGetAllCommentByPostId, setPostId } from "../../store/feature/commentSlice";
+import { useState } from "react";
 
 interface IPostProps{
 	postId: number,
@@ -18,6 +19,7 @@ interface IPostProps{
 function Post(props: IPostProps ) {
 	const dispatch = useDispatch<SocialDispatch>(); 
 	const token = useAppSelector(state=> state.auth.token);
+	const [onErrorImage,setOnErrorImage] = useState(false);
 	const addComment = ()=>{		
 		dispatch(setPostId(props.postId));
 	}	
@@ -38,6 +40,7 @@ function Post(props: IPostProps ) {
 			<div className="card-body">
 				<div className="media">
 					<img
+					
 						src={props.avatar}
 						alt="img"
 						width="55px"
@@ -51,7 +54,8 @@ function Post(props: IPostProps ) {
 						</p>
 						<div className="col-12 p-1 text-center">
 							<img
-								src={props.url}
+								onError={()=>setOnErrorImage(true)}
+								src={onErrorImage ? '/img/default.jpg' :props.url}
 								alt=""
 								className="img-fluid shadow-sm img-thumbnail"
 								style={{width:'100%', height:'400px'}}

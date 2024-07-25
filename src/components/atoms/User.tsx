@@ -3,6 +3,7 @@ import { SocialDispatch, useAppSelector } from "../../store";
 import { fetchAddFollow, fetchFollowList, fetchUnFollow } from "../../store/feature/followSlice";
 import swal from "sweetalert";
 import { fetchSearchUserList } from "../../store/feature/userSlice";
+import { useState } from "react";
 interface IUserProps{
     userId: number,
     avatar: string,
@@ -13,6 +14,7 @@ interface IUserProps{
 function User(user: IUserProps) {
 	const token = useAppSelector(state=> state.auth.token);
 	const userName = useAppSelector(state => state.user.searchUserName);
+	const [onImageError,setOnImageError] = useState(false);
 	const dispatch = useDispatch<SocialDispatch>();
 	const addFollow = ()=>{
 		dispatch(fetchAddFollow({
@@ -47,7 +49,12 @@ function User(user: IUserProps) {
 		<div className="row">
 			<div className="col-3 ">
 				<img
-					src={user.avatar === null ? '/img/default-avatar.png' : user.avatar}
+					src={
+						user.avatar === null 
+						? '/img/default-avatar.png' 
+						: onImageError ? '/img/default-avatar.png' : user.avatar
+					}
+					onError={()=>setOnImageError(true)}
 					alt="img"
 					width="50px"
 					height="50px"

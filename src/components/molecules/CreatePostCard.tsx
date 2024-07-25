@@ -3,7 +3,7 @@ import { useDispatch } from "react-redux";
 import { useAppSelector, SocialDispatch } from "../../store";
 import { fetchCreatePost, fetchGetPostList } from "../../store/feature/postSlice";
 import swal from "sweetalert";
-import { InputFiles } from "typescript";
+import Rest from '../../config/RestApis';
 function CreatePostCard() {
 	const token = useAppSelector(state=>state.auth.token);
 	const dispatch = useDispatch<SocialDispatch>();
@@ -17,11 +17,11 @@ function CreatePostCard() {
 		setPhotos(URL.createObjectURL(event.target.files![0]))
 	};
 	const createPost = async ()=>{
-
+	
 		let formData: FormData = new FormData();
 		formData.append('file', selectedFile);
 		
-		let result = await fetch('http://localhost:9090/media/add-storage-post',{
+		let result = await fetch(Rest.media+'/add-storage-post',{
 			method: 'POST',
 			body: formData
 		}).then(data=>data.json());		
@@ -30,6 +30,7 @@ function CreatePostCard() {
 			comment: comment,
 			url: result.data
 		})).then(()=>{
+		
 			swal('Başarılı', 'Post başarı ile paylaşıldı', 'success').then(()=>{
 				dispatch(fetchGetPostList(token));
 			})
@@ -37,6 +38,7 @@ function CreatePostCard() {
 	}
 	return (
 		<>
+
 			<div className="card-header bg-transparent">
 				<form className="form-inline">
 					<div className="input-group w-100">
@@ -48,11 +50,7 @@ function CreatePostCard() {
 							onClick={()=>inputFileRef.current?.click()}
 						/>
 						<input type="file" hidden ref={inputFileRef} onChange={handleFileChange} />
-							{
-								/**
-								 * onChange={evt => setPhotos(URL.createObjectURL(evt.target.files![0]))}/>
-								 */
-							}
+
 						<textarea
 							onChange={evt=>setComment(evt.target.value)}
 							rows={5}
@@ -62,7 +60,8 @@ function CreatePostCard() {
 							className="form-control form-control-sm"
 						/>
 						<div className="input-group-append" style={{ margin: "2px" }}>
-							<div  onClick={createPost} 
+							<div onClick={createPost} 
+								
 								className="input-group-text hover-post-button"
 								style={{ width: "60px", height: "60px" }}>
 								<i className="fa-solid fa-arrow-up-from-bracket fa-xl ms-2"></i>
@@ -71,6 +70,7 @@ function CreatePostCard() {
 					</div>
 				</form>
 			</div>
+			
 		</>
 	);
 }
