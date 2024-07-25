@@ -105,6 +105,8 @@ const userSlice = createSlice({
         build.addCase(fetchgetUserProfile.fulfilled,(state,action: PayloadAction<IResponse>)=>{
             if(action.payload.code===200){
                 state.userProfile = action.payload.data;
+            }else{
+                
             }
         });
         build.addCase(fetchSearchUserList.fulfilled,(state,action:PayloadAction<IResponse>)=>{

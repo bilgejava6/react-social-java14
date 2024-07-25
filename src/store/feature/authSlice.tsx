@@ -59,7 +59,16 @@ export const fetchLogin = createAsyncThunk(
 const authSlice = createSlice({
     name: 'auth',
     initialState: initialAuthState,
-    reducers:{},
+    reducers:{
+        setToken(state,action: PayloadAction<string>){
+            state.isAuth = true;
+            state.token = action.payload;
+        },
+        clearToken(state){
+            state.isAuth = false;
+            state.token = '';
+        }
+    },
     extraReducers: (build)=>{
         build.addCase(fetchRegister.pending,(state)=>{
             state.isLoadingRegister = true;
@@ -75,6 +84,7 @@ const authSlice = createSlice({
             if(action.payload.code === 200){
                 state.token = action.payload.data;
                 state.isAuth = true;
+                localStorage.setItem('token',action.payload.data);
             }else
                 swal('Hata!',action.payload.message,'error');
             
@@ -84,5 +94,7 @@ const authSlice = createSlice({
         });
     }
 });
-
+export const {
+    setToken,clearToken
+} = authSlice.actions;
 export default authSlice.reducer;

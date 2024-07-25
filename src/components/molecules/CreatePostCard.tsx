@@ -9,6 +9,7 @@ function CreatePostCard() {
 	const dispatch = useDispatch<SocialDispatch>();
 	const [photos, setPhotos] = useState('https://picsum.photos/500/500');
 	const [comment, setComment] = useState('');
+	const [isLoading, setisLoading] = useState(false);
 	let inputFileRef = React.useRef<HTMLInputElement | null>(null);
 	const emptyFile: File = new File([], 'empty-file.txt');
 	const [selectedFile, setSelectedFile] = useState<File>(emptyFile);
@@ -17,7 +18,7 @@ function CreatePostCard() {
 		setPhotos(URL.createObjectURL(event.target.files![0]))
 	};
 	const createPost = async ()=>{
-	
+		setisLoading(true);
 		let formData: FormData = new FormData();
 		formData.append('file', selectedFile);
 		
@@ -30,7 +31,7 @@ function CreatePostCard() {
 			comment: comment,
 			url: result.data
 		})).then(()=>{
-		
+			setisLoading(false);
 			swal('Başarılı', 'Post başarı ile paylaşıldı', 'success').then(()=>{
 				dispatch(fetchGetPostList(token));
 			})
@@ -38,8 +39,9 @@ function CreatePostCard() {
 	}
 	return (
 		<>
-
-			<div className="card-header bg-transparent">
+			
+			<div className="card-header bg-transparent" >
+				
 				<form className="form-inline">
 					<div className="input-group w-100">
 						<img
@@ -60,15 +62,25 @@ function CreatePostCard() {
 							className="form-control form-control-sm"
 						/>
 						<div className="input-group-append" style={{ margin: "2px" }}>
-							<div onClick={createPost} 
-								
+							{
+								isLoading
+								? 
+								<div style={{ width: "60px", height: "60px" }} className="spinner-grow text-success" role="status">
+									<span className="visually-hidden">Loading...</span>
+								</div>
+								: <div onClick={createPost} 						
 								className="input-group-text hover-post-button"
-								style={{ width: "60px", height: "60px" }}>
-								<i className="fa-solid fa-arrow-up-from-bracket fa-xl ms-2"></i>
-							</div>
+								style={{ width: "60px", height: "60px" }}>								
+									
+									<i className="fa-solid fa-arrow-up-from-bracket fa-xl ms-2"></i>
+								</div>
+							}
+							
 						</div>
 					</div>
 				</form>
+				
+				
 			</div>
 			
 		</>

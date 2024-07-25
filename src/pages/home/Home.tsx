@@ -10,13 +10,19 @@ import { fetchgetUserProfile, fetchSearchUserList, IUserProfile } from '../../st
 import AddCommentPopup from '../../components/molecules/AddCommentPopup'
 import CommentListPopup from '../../components/molecules/CommentListPopup'
 import { fetchFollowList } from '../../store/feature/followSlice'
+import { clearToken, setToken } from '../../store/feature/authSlice'
 function Home() {
   const dispatch = useDispatch<SocialDispatch>();      
   const token = useAppSelector(state => state.auth.token);     
   const userProfile: IUserProfile | null = useAppSelector(state=> state.user.userProfile);
   
   useEffect(()=>{
-        dispatch(fetchgetUserProfile(token));
+        dispatch(fetchgetUserProfile(token)).then((data)=>{
+             if(data.payload.code!==200){
+                localStorage.removeItem('token');
+                dispatch(clearToken());
+                }
+        })
         dispatch(fetchSearchUserList({token: token, userName:''}));
         dispatch(fetchFollowList(token));
   },[]);
